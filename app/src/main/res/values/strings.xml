@@ -4,4 +4,6 @@
     <string name="movies">Movies</string>
     <string name="series">Series</string>
     <string name="all">All</string>
+    <string name="offline">Device is Offline</string>
+    <string name="no_results">No Results</string>
 </resources>

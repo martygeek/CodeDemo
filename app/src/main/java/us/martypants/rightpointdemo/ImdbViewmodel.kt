@@ -13,7 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Martin Rehder on 2019-11-02.
  */
-public class ImdbViewmodel (app: App) : AndroidViewModel(app) {
+class ImdbViewmodel (app: App) : AndroidViewModel(app) {
 
     init {
         app.userComponent?.inject(this)
@@ -47,8 +47,7 @@ public class ImdbViewmodel (app: App) : AndroidViewModel(app) {
 
 
     fun searchType(binding: ActivityMainBinding) : String? {
-        val typeOfSearch = binding.types.checkedRadioButtonId
-        return when (typeOfSearch) {
+        return when (binding.types.checkedRadioButtonId) {
             R.id.movies -> "movie"
             R.id.series -> "series"
             else -> null
