@@ -6,4 +6,5 @@
     <string name="all">All</string>
     <string name="offline">Device is Offline</string>
     <string name="no_results">No Results</string>
+    <string name="reqd">Required</string>
 </resources>

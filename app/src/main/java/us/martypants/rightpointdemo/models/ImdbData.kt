@@ -12,7 +12,7 @@ class ImdbData {
 
     @SerializedName("Search")
     @Expose
-    var search: List<Search>? = null
+    var search: MutableList<Search>? = null
 
     @Expose
     var totalResults: String? = null

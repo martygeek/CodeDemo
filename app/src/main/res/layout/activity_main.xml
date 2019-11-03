@@ -3,11 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-        <variable
-            name="handler"
-            type="android.view.View.OnClickListener" />
-
         <variable
             name="viewmodel"
             type="us.martypants.rightpointdemo.ImdbViewmodel" />
@@ -32,6 +27,16 @@
             android:hint="@string/search" />
 
         <Button
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:text="X"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:onClick="@{() -> viewmodel.clearText()}"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editText"
+            app:layout_constraintEnd_toEndOf="@+id/editText"/>
+
+        <Button
             android:id="@+id/search"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -39,7 +44,7 @@
             android:layout_marginTop="12dp"
             android:background="@drawable/button_bkg"
             android:text="@string/search"
-            android:onClick="@{handler}"
+            android:onClick="@{() -> viewmodel.search()}"
             app:layout_constraintEnd_toStartOf="@+id/types"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +75,7 @@
                 android:id="@+id/all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/all"/>
 
         </RadioGroup>

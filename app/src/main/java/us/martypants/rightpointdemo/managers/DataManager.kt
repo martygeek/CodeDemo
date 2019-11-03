@@ -10,13 +10,13 @@ import us.martypants.rightpointdemo.network.DataManagerAPI
  */
 class DataManager(private val mApi: DataManagerAPI) {
 
-    fun getImdbData(search: String) : Observable<ImdbData>? {
-        return mApi.getImdbData(search)
+    fun getImdbData(search: String, page: Int) : Observable<ImdbData>? {
+        return mApi.getImdbData(search, page)
     }
 
 
-    fun getSpecifics(search: String, type: String) : Observable<ImdbData>? {
-        return mApi.getSpecificType(search, type)
+    fun getSpecifics(search: String, type: String, page: Int) : Observable<ImdbData>? {
+        return mApi.getSpecificType(search, type, page)
     }
 
 }

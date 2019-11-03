@@ -16,26 +16,35 @@ import us.martypants.rightpointdemo.databinding.ItemImdbBinding
 import us.martypants.rightpointdemo.models.Search
 import us.martypants.rightpointdemo.view.BindingAdapter
 import us.martypants.rightpointdemo.view.BindingViewHolder
+import us.martypants.rightpointdemo.view.EndlessRecyclerViewScrollListener
 
-
+const val PAGE = 10
 class MainActivity : RxAppCompatActivity() {
 
     private lateinit var viewModel: ImdbViewmodel
     private lateinit var mBinding: ActivityMainBinding
 
+    var titles: MutableList<Search>? = null
+    val layoutMgr = GridLayoutManager(this, 2)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        mBinding.handler = clickListener
         mBinding.editText.imeOptions = EditorInfo.IME_ACTION_DONE;
 
         (application as App).userComponent?.inject(this)
         viewModel =
             ViewModelProviders.of(this, MyViewModelFactory(application as App))
                 .get(ImdbViewmodel::class.java)
+        viewModel.setActivityBinding(mBinding)
+        mBinding.viewmodel = viewModel
         mBinding.recycler.setHasFixedSize(true)
-        val layoutMgr = GridLayoutManager(this, 2)
-        mBinding.recycler.layoutManager = layoutMgr
+
+        mBinding.recycler.layoutManager = layoutMgr as RecyclerView.LayoutManager?
+        mBinding.editText.afterTextChanged { viewModel.currentPage = 1 }
+        mBinding.types.setOnCheckedChangeListener { radioGroup, i -> viewModel.currentPage = 1 }
+
+        mBinding.recycler.addOnScrollListener(scrollListener)
 
         viewModel.imdbSearchList
             .observe(this, Observer {
@@ -45,54 +54,48 @@ class MainActivity : RxAppCompatActivity() {
 
     }
 
-    private val clickListener = View.OnClickListener { v ->
-        when (v?.id) {
-            R.id.search -> {
-                val searchText = mBinding.editText.text.toString()
-                if (searchText.isEmpty()) {
-                    mBinding.editText.error = "Required"
-                } else {
-                    if (isConnectedToNetwork(this)) {
-                        mBinding.editText.error = null
-                        viewModel.getImdbData(searchText, viewModel.searchType(mBinding))
-                        closeKeyboard(this)
-
-                    } else {
-                        errorDialog( this,getString(R.string.offline))
-                    }
-                }
-            }
+    val scrollListener = object: EndlessRecyclerViewScrollListener(layoutMgr) {
+        override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+            //  Triggered only when new data needs to be appended to the list
+            viewModel.currentPage ++
+            viewModel.search()
         }
+
     }
-
-
     private fun setupRecycler() {
         Log.d("MJR", viewModel.imdbSearchList.value?.first.toString())
         mBinding.progressCircular.visibility = View.VISIBLE
-        val titles: List<Search>? = viewModel.imdbSearchList.value?.first
-        val adapter: RecyclerView.Adapter<BindingViewHolder<ItemImdbBinding>>?
-        if (titles != null) {
-            mBinding.recycler.visibility = View.VISIBLE
+        if (viewModel.currentPage > 1) {
+            titles?.addAll(viewModel.imdbSearchList.value?.first!!)
+            mBinding.recycler.adapter?.notifyItemRangeInserted((viewModel.currentPage * PAGE) - PAGE, PAGE)
+        } else {
+            titles = viewModel.imdbSearchList.value?.first
+            mBinding.recycler.addOnScrollListener(scrollListener)
 
-            adapter = object: BindingAdapter<ItemImdbBinding>(R.layout.item_imdb) {
-                   override fun getItemCount(): Int {
-                       return titles.size
-                   }
+            val adapter: RecyclerView.Adapter<BindingViewHolder<ItemImdbBinding>>?
+            if (titles != null) {
+                mBinding.recycler.visibility = View.VISIBLE
 
-                   override fun updateBinding(binding: ItemImdbBinding?, position: Int) {
-                       val item = titles[position]
-                       binding?.model = item
-                       Picasso.with(this@MainActivity)
-                           .load(item.poster)
-                           .error(R.drawable.notfound)
-                           .into(binding?.image)
-                   }
-               }
+                adapter = object : BindingAdapter<ItemImdbBinding>(R.layout.item_imdb) {
+                    override fun getItemCount(): Int {
+                        return titles?.size!!
+                    }
+
+                    override fun updateBinding(binding: ItemImdbBinding?, position: Int) {
+                        val item = titles?.get(position)
+                        binding?.model = item
+                        Picasso.with(this@MainActivity)
+                            .load(item?.poster)
+                            .error(R.drawable.notfound)
+                            .into(binding?.image)
+                    }
+                }
                 mBinding.recycler.adapter = adapter
 
-        } else {
-            errorDialog(this, getString(R.string.no_results))
-            mBinding.recycler.visibility = View.GONE
+            } else {
+                errorDialog(this, getString(R.string.no_results))
+                mBinding.recycler.visibility = View.GONE
+            }
         }
     }
 

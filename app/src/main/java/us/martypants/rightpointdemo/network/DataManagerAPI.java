@@ -14,10 +14,10 @@ public interface DataManagerAPI {
 
 
     @GET("/?apikey=2ec4b519")
-    Observable<ImdbData> getImdbData(@Query("s") String search);
+    Observable<ImdbData> getImdbData(@Query("s") String search, @Query("page") int page);
 
     @GET("/?apikey=2ec4b519")
-    Observable<ImdbData> getSpecificType(@Query("s") String search, @Query("type") String type);
+    Observable<ImdbData> getSpecificType(@Query("s") String search, @Query("type") String type, @Query("page") int page);
 
 }
 

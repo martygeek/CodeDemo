@@ -3,8 +3,11 @@ package us.martypants.rightpointdemo
 import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 
 
@@ -32,7 +35,7 @@ fun isConnectedToNetwork(ctx: Context): Boolean {
 
 fun errorDialog(context: Context, error:String) {
     val builder: AlertDialog.Builder? = context.let {
-        AlertDialog.Builder(it)
+        AlertDialog.Builder(it, R.style.MyAlertDialogTheme)
     }
 
     builder?.setMessage(error)
@@ -43,4 +46,18 @@ fun errorDialog(context: Context, error:String) {
 
     val dialog: AlertDialog? = builder?.create()
     dialog?.show()
+}
+
+fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun afterTextChanged(editable: Editable?) {
+            afterTextChanged.invoke(editable.toString())
+        }
+    })
 }

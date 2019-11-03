@@ -20,9 +20,9 @@ class ImdbRepository(app: App) {
     @Inject
     lateinit var dataManager: DataManager
 
-    fun getImdbData(searchString: String, completion: (result: Pair<List<Search>?, Error?>) -> Unit) {
+    fun getImdbData(searchString: String, page: Int, completion: (result: Pair<MutableList<Search>?, Error?>) -> Unit) {
 
-        dataManager.getImdbData(searchString)
+        dataManager.getImdbData(searchString, page)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe({
@@ -36,9 +36,9 @@ class ImdbRepository(app: App) {
                 })
     }
 
-    fun getImdbTypeData(searchString: String, searchType: String, completion: (result: Pair<List<Search>?, Error?>) -> Unit) {
+    fun getImdbTypeData(searchString: String, searchType: String, page: Int, completion: (result: Pair<MutableList<Search>?, Error?>) -> Unit) {
 
-        dataManager.getSpecifics(searchString, searchType)
+        dataManager.getSpecifics(searchString, searchType, page)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe({
