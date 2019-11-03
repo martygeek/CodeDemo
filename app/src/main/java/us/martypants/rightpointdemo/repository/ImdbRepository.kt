@@ -1,8 +1,9 @@
-package us.martypants.rightpointdemo
+package us.martypants.rightpointdemo.repository
 
 import android.util.Log
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import us.martypants.rightpointdemo.App
 import us.martypants.rightpointdemo.managers.DataManager
 import us.martypants.rightpointdemo.models.Search
 import javax.inject.Inject
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class ImdbRepository(app: App) {
 
     init {
-        app.userComponent.inject(this)
+        app.userComponent?.inject(this)
     }
 
     @Inject
@@ -30,7 +31,23 @@ class ImdbRepository(app: App) {
                 { error ->
 
                     Log.d(
-                        "MJR","Error: " + error.localizedMessage
+                        "REPO","Error: " + error.localizedMessage
+                    )
+                })
+    }
+
+    fun getImdbTypeData(searchString: String, searchType: String, completion: (result: Pair<List<Search>?, Error?>) -> Unit) {
+
+        dataManager.getSpecifics(searchString, searchType)
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe({
+                completion(Pair(it.search, null))
+            },
+                { error ->
+
+                    Log.d(
+                        "REPO","Error: " + error.localizedMessage
                     )
                 })
     }

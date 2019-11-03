@@ -1,4 +1,4 @@
-package us.martypants.rightpointdemo;
+package us.martypants.rightpointdemo.network;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

@@ -1,8 +1,8 @@
 package us.martypants.rightpointdemo.managers
 
 import rx.Observable
-import us.martypants.rightpointdemo.DataManagerAPI
 import us.martypants.rightpointdemo.models.ImdbData
+import us.martypants.rightpointdemo.network.DataManagerAPI
 
 
 /**

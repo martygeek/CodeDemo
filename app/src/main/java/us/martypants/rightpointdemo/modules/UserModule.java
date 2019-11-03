@@ -6,9 +6,9 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 import us.martypants.rightpointdemo.App;
-import us.martypants.rightpointdemo.DataManagerAPI;
-import us.martypants.rightpointdemo.ImdbRepository;
 import us.martypants.rightpointdemo.managers.DataManager;
+import us.martypants.rightpointdemo.network.DataManagerAPI;
+import us.martypants.rightpointdemo.repository.ImdbRepository;
 
 
 @Module
