@@ -19,7 +19,5 @@ public interface DataManagerAPI {
     @GET("/?apikey=2ec4b519")
     Observable<ImdbData> getSpecificType(@Query("s") String search, @Query("type") String type);
 
-
-
 }
 

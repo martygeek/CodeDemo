@@ -31,31 +31,6 @@ public class ImdbViewmodel (app: App) : AndroidViewModel(app) {
                 imdbSearchList.value = it
             }
         }
-//        dataManager.getImdbData(searchString)
-//            ?.subscribeOn(Schedulers.io())
-//            ?.observeOn(AndroidSchedulers.mainThread())
-//            ?.subscribe({ nwrtimesheets -> showData(nwrtimesheets) },
-//                { error ->
-//
-//                        Log.d("MJR",
-//                            "Error: " + error.localizedMessage  )
-//
-//                })
 
     }
-
-//    fun showData(imdb: ImdbData) {
-//        if (imdb != null) {
-//            Log.d("MJR", imdb.toString())
-//            val handler = Handler(Looper.getMainLooper())
-//            handler.post {
-//                imdbSearchList.value = it
-//                if (imdbSearchList.value!!.first == null) {
-//                    Log.d("MJR", "Error retrieving Hotel Data")
-//                }
-//            }
-//
-//             = Pair(imdb.search, null)
-//        }
-//    }
 }

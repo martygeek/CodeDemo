@@ -1,5 +1,6 @@
 package us.martypants.rightpointdemo
 
+import android.util.Log
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import us.martypants.rightpointdemo.managers.DataManager
@@ -15,27 +16,22 @@ class ImdbRepository(app: App) {
         app.userComponent.inject(this)
     }
 
-
     @Inject
     lateinit var dataManager: DataManager
-
 
     fun getImdbData(searchString: String, completion: (result: Pair<List<Search>?, Error?>) -> Unit) {
 
         dataManager.getImdbData(searchString)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe({ it ->
-                if (it.search.isNotEmpty())
-                    completion(Pair(it.search, null)) },
+            ?.subscribe({
+                completion(Pair(it.search, null))
+            },
                 { error ->
-                    completion(Pair(null, Error(error.localizedMessage)))
 
+                    Log.d(
+                        "MJR","Error: " + error.localizedMessage
+                    )
                 })
-
     }
-
-
-
-
 }

@@ -40,8 +40,6 @@ public class App extends Application {
     }
 
 
-
-
     private String getNetworkEndpoint() {
         return  "https://www.omdbapi.com";
     }
