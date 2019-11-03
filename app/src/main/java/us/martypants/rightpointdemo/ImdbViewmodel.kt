@@ -27,7 +27,7 @@ class ImdbViewmodel (app: App) : AndroidViewModel(app) {
     @Inject
     lateinit var repo: ImdbRepository
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     var imdbSearchList = MutableLiveData<Pair<MutableList<Search>?, Error?>>()
     var currentPage = 1
@@ -76,7 +76,7 @@ class ImdbViewmodel (app: App) : AndroidViewModel(app) {
         binding.editText.text = null
     }
 
-    fun searchType() : String? {
+    private fun searchType() : String? {
         return when (binding.types.checkedRadioButtonId) {
             R.id.movies -> "movie"
             R.id.series -> "series"

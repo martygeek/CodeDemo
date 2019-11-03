@@ -30,7 +30,7 @@ class MainActivity : RxAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        mBinding.editText.imeOptions = EditorInfo.IME_ACTION_DONE;
+        mBinding.editText.imeOptions = EditorInfo.IME_ACTION_DONE
 
         (application as App).userComponent?.inject(this)
         viewModel =
@@ -40,9 +40,9 @@ class MainActivity : RxAppCompatActivity() {
         mBinding.viewmodel = viewModel
         mBinding.recycler.setHasFixedSize(true)
 
-        mBinding.recycler.layoutManager = layoutMgr as RecyclerView.LayoutManager?
+        mBinding.recycler.layoutManager = layoutMgr
         mBinding.editText.afterTextChanged { viewModel.currentPage = 1 }
-        mBinding.types.setOnCheckedChangeListener { radioGroup, i -> viewModel.currentPage = 1 }
+        mBinding.types.setOnCheckedChangeListener { _, _ -> viewModel.currentPage = 1 }
 
         mBinding.recycler.addOnScrollListener(scrollListener)
 
@@ -54,7 +54,7 @@ class MainActivity : RxAppCompatActivity() {
 
     }
 
-    val scrollListener = object: EndlessRecyclerViewScrollListener(layoutMgr) {
+    private val scrollListener = object: EndlessRecyclerViewScrollListener(layoutMgr) {
         override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
             //  Triggered only when new data needs to be appended to the list
             viewModel.currentPage ++
