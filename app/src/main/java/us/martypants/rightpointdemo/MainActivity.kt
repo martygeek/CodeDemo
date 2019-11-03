@@ -39,12 +39,10 @@ class MainActivity : RxAppCompatActivity() {
         viewModel.setActivityBinding(mBinding)
         mBinding.viewmodel = viewModel
         mBinding.recycler.setHasFixedSize(true)
-
         mBinding.recycler.layoutManager = layoutMgr
+        mBinding.recycler.addOnScrollListener(scrollListener)
         mBinding.editText.afterTextChanged { viewModel.currentPage = 1 }
         mBinding.types.setOnCheckedChangeListener { _, _ -> viewModel.currentPage = 1 }
-
-        mBinding.recycler.addOnScrollListener(scrollListener)
 
         viewModel.imdbSearchList
             .observe(this, Observer {
@@ -70,7 +68,7 @@ class MainActivity : RxAppCompatActivity() {
             mBinding.recycler.adapter?.notifyItemRangeInserted((viewModel.currentPage * PAGE) - PAGE, PAGE)
         } else {
             titles = viewModel.imdbSearchList.value?.first
-            mBinding.recycler.addOnScrollListener(scrollListener)
+            scrollListener.resetState()
 
             val adapter: RecyclerView.Adapter<BindingViewHolder<ItemImdbBinding>>?
             if (titles != null) {
