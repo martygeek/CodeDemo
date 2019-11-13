@@ -19,6 +19,7 @@ import us.martypants.rightpointdemo.view.BindingViewHolder
 import us.martypants.rightpointdemo.view.EndlessRecyclerViewScrollListener
 
 const val PAGE = 10
+
 class MainActivity : RxAppCompatActivity() {
 
     private lateinit var viewModel: ImdbViewmodel
@@ -52,20 +53,24 @@ class MainActivity : RxAppCompatActivity() {
 
     }
 
-    private val scrollListener = object: EndlessRecyclerViewScrollListener(layoutMgr) {
+    private val scrollListener = object : EndlessRecyclerViewScrollListener(layoutMgr) {
         override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
             //  Triggered only when new data needs to be appended to the list
-            viewModel.currentPage ++
+            viewModel.currentPage++
             viewModel.search()
         }
 
     }
+
     private fun setupRecycler() {
         Log.d("MJR", viewModel.imdbSearchList.value?.first.toString())
         mBinding.progressCircular.visibility = View.VISIBLE
         if (viewModel.currentPage > 1) {
             titles?.addAll(viewModel.imdbSearchList.value?.first!!)
-            mBinding.recycler.adapter?.notifyItemRangeInserted((viewModel.currentPage * PAGE) - PAGE, PAGE)
+            mBinding.recycler.adapter?.notifyItemRangeInserted(
+                (viewModel.currentPage * PAGE) - PAGE,
+                PAGE
+            )
         } else {
             titles = viewModel.imdbSearchList.value?.first
             scrollListener.resetState()
@@ -81,7 +86,9 @@ class MainActivity : RxAppCompatActivity() {
 
                     override fun updateBinding(binding: ItemImdbBinding?, position: Int) {
                         val item = titles?.get(position)
-                        binding?.model = item
+                        binding?.assetname = item?.title
+                        binding?.image?.tag = item?.imdbID
+                        binding?.handler = clickListener
                         Picasso.with(this@MainActivity)
                             .load(item?.poster)
                             .error(R.drawable.notfound)
@@ -97,4 +104,27 @@ class MainActivity : RxAppCompatActivity() {
         }
     }
 
+    private val clickListener = View.OnClickListener { v ->
+        val id = v.tag as String
+        loadFragment(id)
+    }
+
+    override fun onBackPressed() {
+        mBinding.recycler.visibility = View.VISIBLE
+        mBinding.container.visibility = View.GONE
+        super.onBackPressed()
+    }
+
+    private fun loadFragment(id: String) {
+
+        val item = titles?.firstOrNull { it.imdbID == id }
+        val frag = DetailFragment.newInstance(item)
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.container, frag)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+        mBinding.recycler.visibility = View.GONE
+        mBinding.container.visibility = View.VISIBLE
+    }
 }

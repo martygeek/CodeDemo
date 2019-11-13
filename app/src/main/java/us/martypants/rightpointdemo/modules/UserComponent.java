@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import us.martypants.rightpointdemo.App;
+import us.martypants.rightpointdemo.DetailFragment;
 import us.martypants.rightpointdemo.ImdbViewmodel;
 import us.martypants.rightpointdemo.MainActivity;
 import us.martypants.rightpointdemo.repository.ImdbRepository;
@@ -25,5 +26,6 @@ public interface UserComponent {
     void inject(MainActivity mainActivity);
     void inject(ImdbViewmodel viewmodel);
     void inject(ImdbRepository imdbRepository);
+    void inject(DetailFragment detailFragment);
 
 }

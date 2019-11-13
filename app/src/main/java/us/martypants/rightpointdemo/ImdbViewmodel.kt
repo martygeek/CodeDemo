@@ -32,6 +32,7 @@ class ImdbViewmodel (app: App) : AndroidViewModel(app) {
     var imdbSearchList = MutableLiveData<Pair<MutableList<Search>?, Error?>>()
     var currentPage = 1
 
+
     fun getImdbData(searchString: String, searchType: String?) {
 
         if (searchType != null) {
@@ -75,6 +76,7 @@ class ImdbViewmodel (app: App) : AndroidViewModel(app) {
     fun clearText() {
         binding.editText.text = null
     }
+
 
     private fun searchType() : String? {
         return when (binding.types.checkedRadioButtonId) {

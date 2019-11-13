@@ -2,9 +2,10 @@ package us.martypants.rightpointdemo.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
-class Search {
+class Search : Serializable {
 
     @Expose
     var imdbID: String? = null
