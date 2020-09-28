@@ -1,4 +1,4 @@
-package us.martypants.rightpointdemo.view;
+package us.martypants.hca.view;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package us.martypants.rightpointdemo.view;
+package us.martypants.hca.view;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

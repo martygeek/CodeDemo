@@ -1,14 +1,14 @@
-package us.martypants.rightpointdemo.modules;
+package us.martypants.hca.modules;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
-import us.martypants.rightpointdemo.App;
-import us.martypants.rightpointdemo.managers.DataManager;
-import us.martypants.rightpointdemo.network.DataManagerAPI;
-import us.martypants.rightpointdemo.repository.ImdbRepository;
+import us.martypants.hca.App;
+import us.martypants.hca.managers.DataManager;
+import us.martypants.hca.network.DataManagerAPI;
+import us.martypants.hca.repository.SoRepository;
 
 
 @Module
@@ -30,7 +30,7 @@ public class UserModule {
 
     @Singleton
     @Provides
-    ImdbRepository getImdbRepository(App app) {
-        return new ImdbRepository(app);
+    SoRepository getImdbRepository(App app) {
+        return new SoRepository(app);
     }
 }

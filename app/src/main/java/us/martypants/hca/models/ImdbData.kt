@@ -1,4 +1,4 @@
-package us.martypants.rightpointdemo.models
+package us.martypants.hca.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

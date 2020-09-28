@@ -1,4 +1,4 @@
-package us.martypants.rightpointdemo.modules;
+package us.martypants.hca.modules;
 
 import android.content.Context;
 
@@ -29,7 +29,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import us.martypants.rightpointdemo.App;
+import us.martypants.hca.App;
 
 /**
  * Module for providing network related dependencies.
@@ -60,7 +60,7 @@ public class NetModule {
 
         return new GsonBuilder()
                 .registerTypeAdapter(Date.class, new GsonUtcDateAdapter())
-                .excludeFieldsWithoutExposeAnnotation()
+//                .excludeFieldsWithoutExposeAnnotation()
                 .create();
     }
 

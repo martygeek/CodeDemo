@@ -1,4 +1,4 @@
-package us.martypants.rightpointdemo
+package us.martypants.hca
 
 import android.app.Activity
 import android.content.Context
@@ -10,10 +10,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 
-
-/**
- * Created by Martin Rehder on 2019-11-03.
- */
 fun closeKeyboard(activity: Activity) {
     val imm = activity
         .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

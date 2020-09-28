@@ -1,16 +1,13 @@
-package us.martypants.rightpointdemo;
+package us.martypants.hca;
 
 import android.app.Application;
 import android.content.Context;
 
-import us.martypants.rightpointdemo.modules.DaggerUserComponent;
-import us.martypants.rightpointdemo.modules.NetModule;
-import us.martypants.rightpointdemo.modules.UserComponent;
-import us.martypants.rightpointdemo.modules.UserModule;
+import us.martypants.hca.modules.DaggerUserComponent;
+import us.martypants.hca.modules.NetModule;
+import us.martypants.hca.modules.UserComponent;
+import us.martypants.hca.modules.UserModule;
 
-/**
- * Created by Martin Rehder on 2019-11-02.
- */
 public class App extends Application {
 
     private static final String TAG = "App";
@@ -43,7 +40,7 @@ public class App extends Application {
 
 
     private String getNetworkEndpoint() {
-        return  "https://www.omdbapi.com";
+        return  "http://api.stackexchange.com";
     }
 
     /**

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IMDB Demo for RightPoint</string>
+    <string name="app_name">StackOverflow Demo for HCA</string>
     <string name="search">Search</string>
     <string name="movies">Movies</string>
     <string name="series">Series</string>
@@ -7,4 +7,6 @@
     <string name="offline">Device is Offline</string>
     <string name="no_results">No Results</string>
     <string name="reqd">Required</string>
+    <string name="answers">Answers:</string>
+    <string name="accepted_answer_id">Accepted Answer ID:</string>
 </resources>

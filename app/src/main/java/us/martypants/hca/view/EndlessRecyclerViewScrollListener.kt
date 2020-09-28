@@ -1,13 +1,9 @@
-package us.martypants.rightpointdemo.view
+package us.martypants.hca.view
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-
-/**
- * Created by Martin Rehder on 2019-11-03.
- */
 
 abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
